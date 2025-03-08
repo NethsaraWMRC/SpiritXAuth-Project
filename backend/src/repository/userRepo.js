@@ -1,15 +1,15 @@
 import User from "../models/user.js";
 
-export const getUserByEmail = async (email) => User.findOne({ email });
+export const getUserByUserName = async (username) => User.findOne({ username });
 
 export const createUser = async (userData) => {
   const newUser = new User(userData);
   return await newUser.save();
 };
 
-export const updateUserRefreshToken = async (email, token) => {
+export const updateUserRefreshToken = async (username, token) => {
   return await User.findOneAndUpdate(
-    { email },
+    { username },
     { refreshToken: token },
     { new: true }
   );

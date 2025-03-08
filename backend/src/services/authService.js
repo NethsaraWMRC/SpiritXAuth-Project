@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import {
-  getUserByEmail,
+  getUserByUserName,
   createUser,
   updateUserRefreshToken,
 } from "../repository/userRepo.js";
@@ -11,25 +11,33 @@ import {
 
 //registration
 
-export const registerUser = async (email, password) => {
-  const existingUser = await getUserByEmail(email);
+export const registerUser = async (username, password) => {
+  const existingUser = await getUserByUserName(username);
   if (existingUser) throw new Error("User already exists");
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  return await createUser({ email, password: hashedPassword });
+  return await createUser({ username, password: hashedPassword });
 };
 
 //login
-export const loginUser = async (email, password) => {
-  const user = await getUserByEmail(email);
-  if (!user) throw new Error("User not found");
+export const loginUser = async (username, password) => {
+  const user = await getUserByUserName(username);
+  if (!user) {
+    const error = new Error("User not found");
+    error.statusCode = 404;
+    throw error;
+  }
 
   const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) throw new Error("Invalid credentials");
+  if (!isMatch) {
+    const error = new Error("Invalid credentials");
+    error.statusCode = 401;
+    throw error;
+  }
 
   const accessToken = generateAccessToken(user);
   const refreshToken = generateRefreshToken(user);
 
-  await updateUserRefreshToken(email, refreshToken);
+  await updateUserRefreshToken(username, refreshToken);
   return { accessToken, refreshToken };
 };

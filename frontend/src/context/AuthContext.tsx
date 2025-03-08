@@ -1,8 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: () => void;
+  accessToken: string | null;
+  username: string | null;
+  login: (token: string, uname: string) => void;
   logout: () => void;
 }
 
@@ -12,19 +15,38 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
 
-  const login = () => setIsAuthenticated(true);
+  const navigate = useNavigate();
 
-  const logout = () => setIsAuthenticated(false);
+  const login = (token: string, uname: string) => {
+    setIsAuthenticated(true);
+    setAccessToken(token);
+    setUsername(uname);
+    localStorage.setItem("accessToken", token);
+    localStorage.setItem("username", uname);
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    setAccessToken(null);
+    setUsername(null);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("username");
+    navigate("/login", { replace: true });
+  };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, accessToken, username, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-//  hook to use the AuthContext
+// Hook to use AuthContext
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

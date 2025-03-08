@@ -43,6 +43,13 @@ export const validateUserName = (
     return { isValid: false, message: "User name is required" };
   }
 
+  if (!hasValidStart(userName)) {
+    return {
+      isValid: false,
+      message: "Username cannot start with an underscore or hyphen",
+    };
+  }
+
   if (!hasMinimumInputLength(userName)) {
     return {
       isValid: false,
@@ -59,13 +66,6 @@ export const validateUserName = (
       isValid: false,
       message:
         "User name can only contain letters, numbers, underscores and hyphens",
-    };
-  }
-
-  if (!hasValidStart(userName)) {
-    return {
-      isValid: false,
-      message: "Username cannot start with an underscore or hyphen",
     };
   }
 
@@ -88,10 +88,10 @@ export const validateUsernameInput = (
     return { isValid: false, message: "" };
   }
 
-  if (!hasValidUserNameCharacters(userName)) {
+  if (!hasValidStart(userName)) {
     return {
       isValid: false,
-      message: "Only letters, numbers, underscore and hyphens allowed",
+      message: "Username cannot start with an underscore or hyphen",
     };
   }
 
@@ -99,17 +99,17 @@ export const validateUsernameInput = (
     return { isValid: false, message: "Keep typing... (min 8 characters)" };
   }
 
-  if (!hasValidMaximumInputLength(userName)) {
+  if (!hasValidUserNameCharacters(userName)) {
     return {
       isValid: false,
-      message: "Username is too long (max 30 characters)",
+      message: "Only letters, numbers, underscore and hyphens allowed",
     };
   }
 
-  if (!hasValidStart(userName)) {
+  if (!hasValidMaximumInputLength(userName)) {
     return {
       isValid: false,
-      message: "Username cannot start with an underscore or hyphen",
+      message: "Username is too long (max 20 characters)",
     };
   }
 
@@ -137,7 +137,7 @@ export const hasUppercase = (password: string): boolean => {
 
 // Check if password has at least one special character
 export const hasSpecialCharacter = (password: string): boolean => {
-  return /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+  return /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
 };
 
 /**
@@ -272,4 +272,25 @@ export const validateConfirmPasswordInput = (
   }
 
   return { isValid: true, message: "Passwords match" };
+};
+
+///////////// Login form validation
+
+export const validateLoginUsername = (
+  username: string
+): { isValid: boolean; message?: string } => {
+  if (!username || username.trim() === "") {
+    return { isValid: false, message: "Username is required" };
+  }
+  return { isValid: true };
+};
+
+export const validateLoginPassword = (
+  password: string
+): { isValid: boolean; message?: string } => {
+  if (!password) {
+    return { isValid: false, message: "Password is required" };
+  }
+
+  return { isValid: true };
 };

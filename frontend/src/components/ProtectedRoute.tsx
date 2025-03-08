@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Navbar from "./navbar";
 
 interface ProtectedRouteProps {
   element: React.ReactNode;
@@ -9,11 +10,16 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
   const { isAuthenticated } = useAuth();
 
-  if (isAuthenticated) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }
 
-  return <>{element}</>;
+  return (
+    <>
+      <Navbar />
+      {element}
+    </>
+  );
 };
 
 export default ProtectedRoute;

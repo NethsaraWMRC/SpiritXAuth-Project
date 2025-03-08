@@ -11,7 +11,7 @@ const HomePage: React.FC = () => {
       {/* Optional overlay */}
       <div className="absolute inset-0 flex flex-col justify-center items-center ">
         <h1 className=" text-white font-bold text-6xl">Welcome To</h1>
-        <h3 className=" text-white font-bold text-2xl">
+        <h3 className=" text-white font-bold text-2xl mt-3">
           SpiritX <span className="text-orange-700">Hackathon</span>
         </h3>
       </div>
