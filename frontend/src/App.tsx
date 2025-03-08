@@ -7,12 +7,12 @@ function App() {
   return (
     <>
       <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/" element={<Login />} />
-      </Routes>
-    </Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </Router>
     </>
   )
 }
