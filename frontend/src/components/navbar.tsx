@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
           <span className="text-white font-medium">Hello, {userName}</span>
           <button
             type="button"
-            className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+            className="text-white bg-red-700 hover:bg-red-800 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
             onClick={logout}
           >
             Logout

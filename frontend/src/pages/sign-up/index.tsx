@@ -9,6 +9,7 @@ import {
 } from "../../util/validation";
 import { registerUser } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Signup: React.FC = () => {
   const [userName, setUserName] = useState<string>("");
@@ -124,9 +125,24 @@ const Signup: React.FC = () => {
         const res = await registerUser(userName, password);
 
         console.log(res);
-        navigate("/login");
+        Swal.fire({
+          title: 'Success!',
+          text: 'Your account has been created successfully',
+          icon: 'success',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        }).then(() => {
+          navigate("/login");
+        });
       } catch (error) {
         console.log(error);
+        Swal.fire({
+          title: "Error!",
+          text: "Something went wrong. Please try again.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
       }
     }
   };
@@ -154,18 +170,18 @@ const Signup: React.FC = () => {
     );
   };
   return (
-    <section className="bg-gray-50">
+    <section className="bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full border bg-gray-800 border-gray-700 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <div className="text-md font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            <div className="text-md font-bold leading-tight tracking-tight text-white md:text-2xl">
               Sign up
             </div>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-white"
                 >
                   User Name
                 </label>
@@ -173,7 +189,7 @@ const Signup: React.FC = () => {
                   type="text"
                   name="username"
                   id="username"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                   placeholder="User Name"
                   value={userName}
                   onChange={handleUserNameChange}
@@ -186,7 +202,7 @@ const Signup: React.FC = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-white"
                 >
                   Password
                 </label>
@@ -195,7 +211,7 @@ const Signup: React.FC = () => {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                   value={password}
                   onChange={handlePasswordChange}
                 />
@@ -208,7 +224,7 @@ const Signup: React.FC = () => {
               <div>
                 <label
                   htmlFor="confirm-password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-white"
                 >
                   Confirm password
                 </label>
@@ -217,7 +233,7 @@ const Signup: React.FC = () => {
                   name="confirm-password"
                   id="confirm-password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
                 />
@@ -229,15 +245,15 @@ const Signup: React.FC = () => {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
                 Create an account
               </button>
-              <p className="text-sm font-light text-gray-500">
+              <p className="text-sm font-light text-gray-300">
                 Already have an account?{" "}
                 <a
                   href="/login"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className="font-medium text-blue-600 hover:underline"
                 >
                   Login here
                 </a>
