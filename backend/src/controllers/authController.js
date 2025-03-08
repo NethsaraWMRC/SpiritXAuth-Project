@@ -1,4 +1,5 @@
 import { registerUser, loginUser } from "../services/authService.js";
+import { generateRefreshToken } from "../utils/tokenUtils.js";
 
 export const register = async (req, res) => {
   try {
@@ -17,6 +18,15 @@ export const login = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true });
     res.json({ accessToken, message: "User Login successfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const getRefreshToken = async (req, res) => {
+  try {
+    const refreshToken = generateRefreshToken(user);
+    res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
