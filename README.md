@@ -16,7 +16,7 @@ SpiritXAuth is a modern authentication system featuring:
 
 ### Prerequisites
 
-- Node.js (v16+)
+- Node.js
 - MongoDB (local or Atlas)
 - Git
 
@@ -24,16 +24,17 @@ SpiritXAuth is a modern authentication system featuring:
 
 1. Navigate to the backend directory:
 
+````sh
 cd backend
 
 2. Install dependencies:
-
+```sh
 npm install
 
 3. Configure environment variables:
    Required variables
 
-PORT=<port_num>
+PORT=5000
 MONGODB_URL = <your_mongo_db_url>
 JWT_SECRET=<generate_and_place_jwt_secret_key>
 JWT_REFRESH_SECRET=<generate_and_place_jwt_refresh_secret_key>
@@ -41,21 +42,21 @@ JWT_EXPIRES_IN=<token_expires_time>
 JWT_REFRESH_EXPIRES_IN=<refresh_token_expire_time>
 
 4. Start the backend server:
-
+```sh
 npm run dev
 
 ### Frontend Setup
 
 1. Navigate to the frontend directory:
-
+```sh
 cd frontend
 
 2. Install dependencies:
-
+```sh
 npm install
 
 3. Start the frontend server:
-
+```sh
 npm run dev
 
 Access the application at http://localhost:5173
@@ -142,3 +143,4 @@ After login, protected routes become accessible
 
 JWT tokens are stored securely
 Sessions expire after the configured time period
+````
